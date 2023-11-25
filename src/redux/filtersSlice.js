@@ -4,8 +4,6 @@ const initialState = {
     filters: ""
 }
 
-
-
 export const filtersSlice = createSlice({
   name: 'filter',
   initialState,

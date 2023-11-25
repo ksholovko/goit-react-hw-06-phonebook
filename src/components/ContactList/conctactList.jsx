@@ -10,7 +10,6 @@ export default function ContactList() {
 
     const contacts = useSelector((state) => state.phonebook.contacts);
     const filter = useSelector((state) => state.filter.filters);
-    console.log(contacts);
 
     const filteredContacts = contacts.filter(contact =>
     contact.name.toLowerCase().includes(filter.toLowerCase())
