@@ -1,14 +1,18 @@
 import { useState } from "react";
+import { useSelector, useDispatch } from 'react-redux';
+import { add } from "redux/contactsSlice";
 import { nanoid } from "nanoid";
 import css from "./contactForm.module.css"
 
-export default function ContactForm ({onSubmit}) {
+export default function ContactForm() {
+    
+    const dispatch = useDispatch();
+    const contacts = useSelector((state) => state.phonebook.contacts);
 
     const [name, setName] = useState('');
     const [number, setNumber] = useState('');
 
     const nameInputId = nanoid();
-
     const telInputId = nanoid();
 
     const handleInputChange = event => {
@@ -28,12 +32,18 @@ export default function ContactForm ({onSubmit}) {
                 break;
         }
     }
-    
+
     const handleSubmit = event => {
     
         event.preventDefault();
-      
-      onSubmit({ name, number });
+        const newContact = { id: nanoid(), name, number };
+        
+        if (contacts.find(contact => contact.name.toLowerCase() === newContact.name.toLowerCase())) {
+    alert(`${newContact.name} is already in the contacts`);
+    return;
+        }
+        
+    dispatch(add(newContact));
       
       setName('');
       setNumber('');
